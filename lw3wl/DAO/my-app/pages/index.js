@@ -57,8 +57,12 @@ export default function Home() {
     const getNumProposalsInDAO = async () => {
         try {
             const provider = await getProviderOrSigner();
+            console.log("getnumP",provider);
             const contract = getDaoContractInstance(provider);
+            console.log("contract",contract);
             const daoNumProposals = await contract.numProposals();
+            console.log("daoNumProposals",daoNumProposals);
+            console.log("daoNumProposals",daoNumProposals.toString());
             setNumProposals(daoNumProposals.toString());
         } catch (error) {
             console.error(error);
@@ -171,7 +175,6 @@ export default function Home() {
     const getProviderOrSigner = async (needSigner = false) => {
         const provider = await web3ModalRef.current.connect();
         const web3Provider = new providers.Web3Provider(provider);
-
         const { chainId } = await web3Provider.getNetwork();
         if (chainId !== 4) {
             window.alert("Please switch to the Rinkeby network!");
@@ -188,7 +191,7 @@ export default function Home() {
     // Helper function to return a DAO Contract instance
     // given a Provider/Signer
     const getDaoContractInstance = (providerOrSigner) => {
-        console.log(C)
+
         return new Contract(
             CRYPTODEVS_DAO_CONTRACT_ADDRESS,
             CRYPTODEVS_DAO_ABI,
