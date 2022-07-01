@@ -42,7 +42,7 @@ contract Exchange is ERC20 {
         uint ethAmount = (ethReserve * _amount) / _totalSupply;
         uint cryptoDevTokenAmount = (getReserve() * _amount) / _totalSupply;
         _burn(msg.sender, _amount);
-        payable(msg.value).transfer(ethAmount);
+        payable(msg.sender).transfer(ethAmount);
         ERC20(cryptoDevTokenAddress).transfer(msg.sender, cryptoDevTokenAmount);
         return (ethAmount, cryptoDevTokenAmount);
     }
@@ -75,7 +75,7 @@ contract Exchange is ERC20 {
         uint256 tokenReserve = getReserve();
         // call the `getAmountOfTokens` to get the amount of Eth
         // that would be returned to the user after the swap
-        uint256 ethBought = getAmountOfTokens(
+        uint256 ethBought = getAmountOfToken(
             _tokensSold,
             tokenReserve,
             address(this).balance
